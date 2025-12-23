@@ -2,18 +2,21 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Setup Dasar & Background Global */
 html, body {
   min-height: 100vh;
   margin: 0;
   padding: 0;
-  background-color: #fbcfe8; 
-  background-attachment: fixed; 
-  scroll-behavior: smooth;
-  /* Mencegah layar goyang saat hati terbang keluar */
+  /* Gradasi radial pink soft - otomatis terpasang di semua page */
+  background: radial-gradient(circle at center, #ffffff 0%, #fce7f3 40%, #fbcfe8 100%);
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  background-size: cover;
   overflow-x: hidden;
-  max-width: 100vw;
+  scroll-behavior: smooth;
 }
 
+/* Animasi Hati Terbang */
 @keyframes float {
   0% { 
     transform: translateY(0) scale(1) rotate(0deg); 
@@ -23,8 +26,8 @@ html, body {
     opacity: 1; 
   }
   100% { 
-    /* Gunakan -110vh supaya hati benar-benar hilang dari atas layar HP */
-    transform: translateY(-110vh) scale(1.5) rotate(20deg); 
+    /* Agar hati hilang sempurna di layar HP yang panjang */
+    transform: translateY(-115vh) scale(1.5) rotate(20deg); 
     opacity: 0; 
   }
 }
@@ -34,12 +37,17 @@ html, body {
   font-size: 24px;
   animation: float 4s linear infinite;
   pointer-events: none;
-  /* Naikkan z-index ke 999 agar tidak tertutup video/foto */
   z-index: 999;
   user-select: none;
-  /* Tambahkan ini agar animasi lebih enteng di HP (GPU Acceleration) */
+  /* Optimasi performa HP agar tidak lag saat banyak hati */
   will-change: transform;
 }
 
+/* Utility Font */
 .font-serif { font-family: 'Playfair Display', serif; }
 .font-handwriting { font-family: 'Caveat', cursive; }
+
+/* Reset default background Next.js jika ada */
+main {
+  background: transparent !important;
+}
