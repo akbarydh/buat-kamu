@@ -13,11 +13,27 @@ export default function SweetPage() {
   const [clickHearts, setClickHearts] = useState<HeartType[]>([]);
   const [noBtnPos, setNoBtnPos] = useState({ x: 0, y: 0 });
   
-  // LOGIKA BARU: State untuk ukuran tombol Mau
   const [yesScale, setYesScale] = useState(1);
   const [noClickCount, setNoClickCount] = useState(0);
   
   const audioRef = useRef<HTMLAudioElement | null>(null);
+
+  // DAFTAR KATA-KATA TOMBOL MAU (Makin diklik makin maksa/memelas)
+  const yesTexts = [
+    "Mau! ❤️",
+    "Harus mau! 🥺",
+    "Ayooo diklik! ✨",
+    "Pliiss banget!! 🙏",
+    "Masa gak mau sih? :( ",
+    "Beneran tega?? 😭",
+    "Gak ada tombol lain loh..",
+    "Udah takdir ini, klik aja!",
+    "POKOKNYA MAU! ❤️",
+    "GAK BISA KABURRR! ❤️"
+  ];
+
+  // Mengambil teks berdasarkan jumlah klik tombol "Gak mau"
+  const currentYesText = yesTexts[Math.min(noClickCount, yesTexts.length - 1)];
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -40,10 +56,9 @@ export default function SweetPage() {
     }, 1500);
   };
 
-  // FUNGSI BARU: Gabungan lari + bikin tombol Mau gede
   const handleNoInteraction = () => {
     setNoClickCount(prev => prev + 1);
-    setYesScale(prev => prev + 1.5); // Nambah gede tiap diklik
+    setYesScale(prev => prev + 1.5); 
     
     const maxWidth = window.innerWidth - 120;
     const maxHeight = window.innerHeight - 60;
@@ -60,7 +75,6 @@ export default function SweetPage() {
     }
   };
 
-  // Cek apakah tombol Mau sudah menutupi layar (Skala > 15)
   const isFullPage = yesScale > 15;
 
   return (
@@ -119,7 +133,7 @@ export default function SweetPage() {
               </div>
             </section>
 
-            {/* 3. PERTANYAAN SECTION - Dengan Logika Membesar */}
+            {/* 3. PERTANYAAN SECTION */}
             <section className="min-h-screen flex flex-col items-center justify-center p-6 text-center w-full bg-gradient-to-b from-transparent to-[var(--accent)]/20">
               <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} className="space-y-10 max-w-2xl w-full">
                 
@@ -135,19 +149,19 @@ export default function SweetPage() {
                 </h2>
 
                 <div className="flex flex-col sm:flex-row gap-8 justify-center items-center h-64 relative w-full px-4">
-                  {/* TOMBOL MAU (Yang bakal membesar) */}
+                  {/* TOMBOL MAU (Yang teksnya berubah & membesar) */}
                   <motion.button 
                     style={{ scale: yesScale }}
                     onClick={(e) => { e.stopPropagation(); handleAccept(); }}
                     className={`
-                      px-16 py-6 bg-rose-500 text-white rounded-full font-serif italic text-2xl shadow-2xl transition-all
-                      ${isFullPage ? 'fixed inset-0 z-[100] rounded-none flex items-center justify-center text-6xl' : 'z-20 relative'}
+                      px-16 py-6 bg-rose-500 text-white rounded-full font-serif italic text-2xl shadow-2xl transition-all duration-300
+                      ${isFullPage ? 'fixed inset-0 z-[100] rounded-none flex items-center justify-center text-4xl md:text-7xl p-10' : 'z-20 relative'}
                     `}
                   >
-                    {isFullPage ? "POKOKNYA MAU! ❤️" : "Mau! ❤️"}
+                    {currentYesText}
                   </motion.button>
 
-                  {/* TOMBOL GAMAU (Yang lari + bikin Mau gede) */}
+                  {/* TOMBOL GAMAU */}
                   {!isFullPage && (
                     <button 
                       onMouseEnter={handleNoInteraction}
@@ -156,15 +170,15 @@ export default function SweetPage() {
                         position: noBtnPos.x ? 'fixed' : 'relative', 
                         left: noBtnPos.x, top: noBtnPos.y, zIndex: 30
                       }}
-                      className="px-12 py-4 bg-white text-[var(--secondary)] border-2 border-[var(--secondary)]/10 rounded-full font-serif italic text-lg shadow-md transition-all duration-200"
+                      className="px-12 py-4 bg-white text-[var(--secondary)] border-2 border-[var(--secondary)]/10 rounded-full font-serif italic text-lg shadow-md transition-all duration-200 whitespace-nowrap"
                     >
-                      {noClickCount > 5 ? "Gak bisa lari wkwk" : "Gamau 😕"}
+                      {noClickCount > 5 ? "Gak bisa kabur :P" : "Gamau 😕"}
                     </button>
                   )}
                 </div>
 
                 <p className="text-xs font-serif italic opacity-30 mt-10 uppercase tracking-widest">
-                   There is only one right answer...
+                   One choice, many "Mau"
                 </p>
               </motion.div>
             </section>
