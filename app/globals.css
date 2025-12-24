@@ -35,11 +35,11 @@ html, body {
 .heart {
   position: absolute;
   font-size: 24px;
-  animation: float 4s linear infinite;
+  /* Diubah menjadi 10 detik agar terbangnya slow motion */
+  animation: float 10s linear infinite; 
   pointer-events: none;
   z-index: 999;
   user-select: none;
-  /* Optimasi performa HP agar tidak lag saat banyak hati */
   will-change: transform;
 }
 

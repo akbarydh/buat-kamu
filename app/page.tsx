@@ -15,7 +15,7 @@ export default function Home() {
   const [clickHearts, setClickHearts] = useState<Heart[]>([])
   const [showButton, setShowButton] = useState(false)
 
-  const text1 = "Heeii kamuu🙌"
+  const text1 = "Heeii Nailaaa🙌"
   const text2 = "Aku mau bilang sesuatu niihh 🤗"
 
   // Efek Ketik
