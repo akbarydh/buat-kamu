@@ -168,32 +168,39 @@ export default function SweetPage() {
                   </p>
                 </div>
 
-                <div className="flex flex-col sm:flex-row gap-8 justify-center items-center h-64 relative w-full px-4">
-                  <motion.button 
-                    style={{ scale: yesScale }}
-                    onClick={(e) => { e.stopPropagation(); handleAccept(); }}
-                    className={`
-                      px-16 py-6 bg-rose-500 text-white rounded-full font-serif italic text-2xl shadow-2xl transition-all duration-300
-                      ${isFullPage ? 'fixed inset-0 z-[100] rounded-none flex items-center justify-center text-4xl md:text-7xl p-10' : 'z-20 relative'}
-                    `}
-                  >
-                    {currentYesText}
-                  </motion.button>
+                <div className="relative w-full px-4 min-h-[18rem] flex flex-row items-center justify-center gap-32">
+  
+  {/* YES BUTTON */}
+  <motion.button 
+    style={{ scale: yesScale }}
+    onClick={(e) => { e.stopPropagation(); handleAccept(); }}
+    className={`
+      px-16 py-6 bg-rose-500 text-white rounded-full font-serif italic text-2xl shadow-2xl
+      transition-all duration-300
+      ${isFullPage ? 'fixed inset-0 z-[100] rounded-none flex items-center justify-center text-4xl md:text-7xl p-10' : 'relative z-20'}
+    `}
+  >
+    {currentYesText}
+  </motion.button>
 
-                  {!isFullPage && (
-                    <button 
-                      onMouseEnter={handleNoInteraction}
-                      onClick={(e) => { e.stopPropagation(); handleNoInteraction(); }}
-                      style={{ 
-                        position: noBtnPos.x ? 'fixed' : 'relative', 
-                        left: noBtnPos.x, top: noBtnPos.y, zIndex: 30
-                      }}
-                      className="px-12 py-4 bg-white text-[var(--secondary)] border-2 border-[var(--secondary)]/10 rounded-full font-serif italic text-lg shadow-md transition-all duration-200 whitespace-nowrap"
-                    >
-                      {noClickCount > 5 ? "Gak bisa kabur :P" : "Gamau 😕"}
-                    </button>
-                  )}
-                </div>
+  {/* NO BUTTON */}
+  {!isFullPage && (
+    <button 
+      onMouseEnter={handleNoInteraction}
+      onClick={(e) => { e.stopPropagation(); handleNoInteraction(); }}
+      style={{ 
+        position: noBtnPos.x ? 'fixed' : 'relative', 
+        left: noBtnPos.x || 'auto',
+        top: noBtnPos.y || 'auto',
+        zIndex: 30
+      }}
+      className="px-12 py-4 bg-white text-[var(--secondary)] border-2 border-[var(--secondary)]/10 rounded-full font-serif italic text-lg shadow-md whitespace-nowrap"
+    >
+      {noClickCount > 5 ? "Gak bisa kabur :P" : "Gamau 😕"}
+    </button>
+  )}
+</div>
+
 
                 <p className="text-xs font-serif italic opacity-30 mt-10 uppercase tracking-widest">
                    "Setiap detik bersamamu adalah hadiah yang kuinginkan selamanya"
